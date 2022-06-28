@@ -55,3 +55,10 @@ source $DOTFILES/zsh/scripts.sh
 # fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+bindkey -r '^l'
+bindkey -r '^g'
+bindkey -s '^g' 'clear\n'
+
+# tmuxp
+export DISABLE_AUTO_TITLE='true'

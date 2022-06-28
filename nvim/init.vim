@@ -29,8 +29,18 @@ call plug#begin("~/.config/nvim/plugged")
     Plug 'sbdchd/neoformat'
     Plug 'mbbill/undotree'
     Plug 'itchyny/lightline.vim'
-    Plug 'w0rp/ale'
     Plug 'vim-test/vim-test'
+    
+    "tmux
+    Plug 'wellle/tmux-complete.vim'
+    Plug 'tmux-plugins/vim-tmux'
+    Plug 'tmux-plugins/vim-tmux-focus-events'
+    Plug 'christoomey/vim-tmux-navigator'
+    " Compiler and linter
+    Plug 'neomake/neomake'
+    " Plug 'w0rp/ale'
+    " Collection of snippets
+    Plug 'honza/vim-snippets'
 call plug#end()
 " Everything after this line will be the config section
 
@@ -233,12 +243,13 @@ vmap <C-/> <plug>NERDCommenterToggle
 nmap <C-/> <plug>NERDCommenterToggle
 
 " ALE (Asynchronous Lint Engine)
-let g:ale_fixers = {
- \ 'javascript': ['eslint']
- \ }
-let g:ale_sign_error = '❌'
-let g:ale_sign_warning = '⚠️'
-let g:ale_fix_on_save = 1
+" use this or neomake
+" let g:ale_fixers = {
+ " \ 'javascript': ['eslint']
+ " \ }
+" let g:ale_sign_error = '❌'
+" let g:ale_sign_warning = '⚠️'
+" let g:ale_fix_on_save = 1
 
 " COC
 " " COC extension
@@ -277,7 +288,35 @@ autocmd BufWritePre *.vue Prettier
 autocmd BufWritePre *.ts Prettier
 
 " " emmet
-let g:user_emmet_leader_key="<C-E>"
+let g:user_emmet_leader_key='<C-E>'
 
 " " coc.nvim auto complete
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+
+"###########
+"# Neomake #
+"###########
+
+" Needs to install shellcheck and vint: `sudo pacman -S shellcheck vint`
+
+" Neomake signs in the gutter
+let g:neomake_error_sign = {'text': '', 'texthl': 'NeomakeErrorSign'}
+let g:neomake_warning_sign = {
+            \   'text': '',
+            \   'texthl': 'NeomakeWarningSign',
+            \ }
+let g:neomake_message_sign = {
+            \   'text': '',
+            \   'texthl': 'NeomakeWarningSign',
+            \ }
+let g:neomake_info_sign = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
+
+" update neomake when save file
+call neomake#configure#automake('w')
+
+command! -bang -nargs=* -complete=file Make NeomakeProject <args>
+
+" Enable linters
+let g:neomake_sh_enabled_makers = ['shellcheck']
+let g:neomake_vim_enabled_makers = ['vint']
