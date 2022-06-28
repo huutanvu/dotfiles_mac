@@ -6,3 +6,12 @@ alias vim="nvim"
 alias oldvim="\vim"
 alias d='dirs -v'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
+export WORK="$HOME/Documents/work"
+alias w='cd $WORK'
+alias tmux="TERM=screen-256color-bce tmux"
+alias ui="cd $WORK/ui-components"
+alias acp="cd $WORK/registry-service/frontend/app-store-catalog"
+alias suitup="cd $WORK/suite-nonsplit && docker/sdk up --build --assets --data"
+alias suitbuild="cd $WORK/suite-nonsplit && docker/sdk up --build --assets"
+alias suitclean="cd $WORK/suite-nonsplit && docker/sdk stop && docker/sdk clean-data"
+alias suitstop="cd $WORK/suite-nonsplit && docker/sdk stop"

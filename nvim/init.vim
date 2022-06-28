@@ -269,6 +269,7 @@ nmap <leader>f  <Plug>(coc-format-selected)
 
 " " go back to previous file
 nmap <leader>bb <C-^>
+nmap <leader>bn :bn<CR>
 
 " " Vue
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
