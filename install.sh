@@ -24,6 +24,6 @@ ln -sf "$DOTFILES/zsh/external" "$XDG_CONFIG_HOME/zsh"
 mkdir -p "$XDG_CONFIG_HOME/tmux"
 ln -sf "$DOTFILES/tmux/tmux.conf" "$XDG_CONFIG_HOME/tmux/tmux.conf"
 
-[ ! -d "XDG_CONFIG_HOME/tmux/plugins/tpm" ] \
+[ ! -d "$XDG_CONFIG_HOME/tmux/plugins/tpm" ] \
   && git clone https://github.com/tmux-plugins/tpm \
-  "XDG_CONFIG_HOME/tmux/plugins/tpm"
+  "$XDG_CONFIG_HOME/tmux/plugins/tpm"
