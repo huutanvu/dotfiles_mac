@@ -96,6 +96,9 @@ set incsearch
 set undodir=~/.config/nvim/undodir
 set undofile " save undotree to a file
 
+" fzf in vim for Mac
+set rtp+=/usr/local/opt/fzf
+
 
 " Key Map
 " Open GitFiles
