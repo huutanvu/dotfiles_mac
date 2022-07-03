@@ -323,3 +323,14 @@ command! -bang -nargs=* -complete=file Make NeomakeProject <args>
 " Enable linters
 let g:neomake_sh_enabled_makers = ['shellcheck']
 let g:neomake_vim_enabled_makers = ['vint']
+
+" fzf rg
+nnoremap <leader>gs :Rg<space>
+nnoremap <leader>st :exec "Rg ".expand("<cword>")<cr>
+
+autocmd VimEnter * command! -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
