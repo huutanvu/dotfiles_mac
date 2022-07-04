@@ -10,7 +10,18 @@ export WORK="$HOME/Documents/work"
 alias w='cd $WORK'
 alias ui="tmuxp load ui-components -y"
 alias acp="tmuxp load acp -y"
-alias suitup="cd $WORK/suite-nonsplit && docker/sdk up --build --assets --data"
-alias suitbuild="cd $WORK/suite-nonsplit && docker/sdk up --build --assets"
-alias suitclean="cd $WORK/suite-nonsplit && docker/sdk stop && docker/sdk clean-data"
-alias suitstop="cd $WORK/suite-nonsplit && docker/sdk stop"
+alias storesuit="tmuxp load store-suite -y"
+alias suite="tmuxp load suite-nonsplit -y"
+
+alias suit-up="cd $WORK/suite-nonsplit && docker/sdk up --build --assets --data"
+alias suit-build="cd $WORK/suite-nonsplit && docker/sdk up --build --assets"
+alias suit-clean="cd $WORK/suite-nonsplit && docker/sdk stop && docker/sdk clean-data"
+alias suit-stop="cd $WORK/suite-nonsplit && docker/sdk stop"
+alias suit-rebuild="cd $WORK/suite-nonsplit && docker/sdk clean && docker/sdk boot deploy.acp-dev.yml && docker/sdk up --build --assets"
+alias acp-rebuild-fe="cd $WORK/suite-nonsplit && docker/sdk cli bash acp/bin/commands/atrs-command.sh npm i \
+  && docker/sdk cli bash acp/bin/commands/atrs-command.sh vendor/bin/console app-catalog:generate-loader:hash \
+  && docker/sdk cli bash acp/bin/commands/atrs-command.sh vendor/bin/console app-catalog:script:build \
+  && docker/sdk cli bash acp/bin/commands/atrs-command.sh vendor/bin/console app-catalog:generate-loader:script \
+  && docker/sdk cli bash acp/bin/commands/atrs-command.sh npm run yves:custom:build"
+alias apps-rebuild="cd $WORK/suite-nonsplit && docker/sdk cli bash acp/bin/commands/apps-command.sh vendor/bin/console transf:g \
+  && docker/sdk cli bash acp/bin/commands/apps-command.sh vendor/bin/console prop:ins"

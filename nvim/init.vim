@@ -139,6 +139,15 @@ nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
 " Format the whole file
 nnoremap <leader>af :Neoformat<CR>
 
+" relative path
+nnoremap <leader>rp :let @+ = expand("%")<CR>
+
+" full path
+nnoremap <leader>fp :let @+ = expand("%:p")<CR>
+
+" just filename
+nnoremap <leader>nf :let @+ = expand("%:t")<CR>
+
 " Enable autocompletion:
 set wildmode=longest,list,full
 set wildmenu
@@ -160,9 +169,9 @@ nnoremap <C-l> :wincmd l<CR>
 " Replace all is aliased to S.
 nnoremap S :%s//g<Left><Left>
 " Resize windows
-nnoremap <C-=> :vertical resize +5<CR>
-nnoremap <C--> :vertical resize -5<CR>
-nnoremap <leader>rp :resize 100<CR>
+" nnoremap <C-=> :vertical resize +5<CR>
+" nnoremap <C--> :vertical resize -5<CR>
+" nnoremap <leader>rp :resize 100<CR>
 
 " NERDTree
 let g:NERDTreeShowHidden = 1
@@ -330,7 +339,7 @@ nnoremap <leader>st :exec "Rg ".expand("<cword>")<cr>
 
 autocmd VimEnter * command! -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
+  \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --glob "!node_modules/*" --glob "!yarn.lock" --glob "!package-lock.json" --color "always" '.shellescape(<q-args>), 1,
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
