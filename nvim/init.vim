@@ -337,9 +337,9 @@ let g:neomake_vim_enabled_makers = ['vint']
 nnoremap <leader>gs :Rg<space>
 nnoremap <leader>st :exec "Rg ".expand("<cword>")<cr>
 
-autocmd VimEnter * command! -nargs=* Rg
+autocmd VimEnter * command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --glob "!node_modules/*" --glob "!yarn.lock" --glob "!package-lock.json" --color "always" '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   fzf#vim#with_preview('up:60%'),
   \   <bang>0)
+
