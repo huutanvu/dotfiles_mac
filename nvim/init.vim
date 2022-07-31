@@ -74,14 +74,33 @@ set wildignore+=*_build/*
 set wildignore+=**/coverage/*
 set wildignore+=**/node_modules/*
 set wildignore+=**/.git/*
+" Disables automatic commenting on newline:
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Key mappings
+" Source vim init file
+nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
+
 " toggle undotree
 nnoremap <leader>u :UndotreeToggle<CR>
 
-" vim-fugitive
+" copy the full file
+nnoremap <leader>y gg"+yG
+" Move a line up or down
+vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
+" Replace the word at cursor with another word
+nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
+" copy full path
+nnoremap <leader>fp :let @+ = expand("%:p")<CR>
 
-
-
-
-
+" Shortcutting split navigation, saving a keypress:
+nnoremap <C-h> :wincmd h<CR>
+nnoremap <C-j> :wincmd j<CR>
+nnoremap <C-k> :wincmd k<CR>
+nnoremap <C-l> :wincmd l<CR>
+" Replace all is aliased to S.
+nnoremap S :%s//g<Left><Left>
+" " go back to previous file
+nmap <leader>bb <C-^>
+nmap <leader>bn :bn<CR>
