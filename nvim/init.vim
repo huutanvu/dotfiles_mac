@@ -10,6 +10,9 @@ endif
 call plug#begin("~/.config/nvim/plugged")
     Plug 'EdenEast/nightfox.nvim'
     Plug 'mbbill/undotree'
+    " git support
+    Plug 'tpope/vim-fugitive'
+    Plug 'junegunn/gv.vim'
 call plug#end()
 
 
@@ -62,9 +65,21 @@ set undofile
 " Incremental searching, start searching while typing
 set incsearch
 
-" Shortcuts
+" wildmenu
+set wildmenu
+set wildmode=longest,list,full
+" ignore some folders/ file types in wildmenu
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=**/coverage/*
+set wildignore+=**/node_modules/*
+set wildignore+=**/.git/*
+
+" Key mappings
 " toggle undotree
 nnoremap <leader>u :UndotreeToggle<CR>
+
+" vim-fugitive
 
 
 
