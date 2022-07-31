@@ -9,6 +9,7 @@ endif
 
 call plug#begin("~/.config/nvim/plugged")
     Plug 'EdenEast/nightfox.nvim'
+    Plug 'mbbill/undotree'
 call plug#end()
 
 
@@ -62,6 +63,8 @@ set undofile
 set incsearch
 
 " Shortcuts
+" toggle undotree
+nnoremap <leader>u :UndotreeToggle<CR>
 
 
 
