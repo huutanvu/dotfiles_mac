@@ -26,7 +26,10 @@ call plug#begin("~/.config/nvim/plugged")
     Plug 'airblade/vim-rooter'
     " status line
     Plug 'itchyny/lightline.vim'
-
+    " emmet
+    Plug 'mattn/emmet-vim'
+    " CoC
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 
@@ -237,3 +240,43 @@ let $FZF_DEFAULT_COMMAND="rg --files --hidden"
 nnoremap <leader>fr :Rg<CR>
 nnoremap <leader>ft :Tags<CR>
 nnoremap <leader>st :exec "Rg ".expand("<cword>")<cr>
+
+" emmet
+let g:user_emmet_leader_key='<C-y>'
+
+" CoC configurations
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" " coc.nvim auto complete on Enter
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" " COC extension
+let g:coc_user_config = {}
+let g:coc_global_extensions = [
+    \ 'coc-emmet',
+    \ 'coc-html',
+    \ ]
+      " \ 'coc-emmet',
+      " \ 'coc-html']
+      " \ 'coc-css',
+      " \ 'coc-json',
+      " \ 'coc-prettier',
+      " \ 'coc-tsserver',
+      " \ 'coc-snippets',
+      " \ 'coc-lua',
+      " \ 'coc-angular',
+      " \ 'coc-python',
+      " \ 'coc-vetur',
+      " \ 'coc-stylelint',
+      " \ 'coc-eslint'
+      
+
