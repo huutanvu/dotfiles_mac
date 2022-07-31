@@ -19,17 +19,24 @@ call plug#begin("~/.config/nvim/plugged")
     Plug 'preservim/nerdcommenter'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'ryanoasis/vim-devicons'
+    " fzf
+    Plug 'junegunn/fzf', {'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    " make sure fzf works at the project folder
+    Plug 'airblade/vim-rooter'
+    " status line
+    Plug 'itchyny/lightline.vim'
 
 call plug#end()
 
 
 " Interface setup
 
-" colorscheme gruvbox
+" " colorscheme gruvbox
 colorscheme nightfox
 set background=dark
 
-" copy to also to the system clipboard
+" " copy to also to the system clipboard
 set clipboard+=unnamedplus
 set number
 set relativenumber
@@ -37,10 +44,10 @@ set scrolloff=8
 set nohlsearch
 set encoding=UTF-8
 
-" change the current working dir to the file's dir
+" " change the current working dir to the file's dir
 set autochdir
 
-" enable syntax
+" " enable syntax
 syntax enable
 
 if !exists('g:syntax_on')
@@ -48,67 +55,67 @@ if !exists('g:syntax_on')
 endif
 filetype plugin on
 
-" Remove the show mode bar - use lightline instead
+" " Remove the show mode bar - use lightline instead
 set noshowmode
 
-" tab options
+" " tab options
 set tabstop=2 softtabstop=2
-" Make the shift width when press > or < 4
+" " Make the shift width when press > or < 4
 set shiftwidth=2
-" Use space instead of tab
+" " Use space instead of tab
 set expandtab
-" Auto indent
+" " Auto indent
 set smartindent
-" Easier to see, wrap can cause navigation confusion
+" " Easier to see, wrap can cause navigation confusion
 set nowrap
-" Case sensitive searching
+" " Case sensitive searching
 set smartcase
 set noswapfile
 set nobackup
-" Set undotree - disable undodir - save undotree to a file
+" " Set undotree - disable undodir - save undotree to a file
 set undodir=~/.config/nvim/undodir
 set undofile
 
-" Incremental searching, start searching while typing
+" " Incremental searching, start searching while typing
 set incsearch
 
-" wildmenu
+" " wildmenu
 set wildmenu
 set wildmode=longest,list,full
-" ignore some folders/ file types in wildmenu
+" " ignore some folders/ file types in wildmenu
 set wildignore+=*.pyc
 set wildignore+=*_build/*
 set wildignore+=**/coverage/*
 set wildignore+=**/node_modules/*
 set wildignore+=**/.git/*
-" Disables automatic commenting on newline:
+" " Disables automatic commenting on newline:
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Key mappings
-" Source vim init file
+" " Source vim init file
 nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
 
-" toggle undotree
+" " toggle undotree
 nnoremap <leader>u :UndotreeToggle<CR>
 
-" copy the full file
+" " copy the full file
 nnoremap <leader>y gg"+yG
-" Move a line up or down
+" " Move a line up or down
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
-" Replace the word at cursor with another word
+" " Replace the word at cursor with another word
 nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
-" copy full path
+" " copy full path
 nnoremap <leader>fp :let @+ = expand("%:p")<CR>
 
-" Shortcutting split navigation, saving a keypress:
+" " Shortcutting split navigation, saving a keypress:
 nnoremap <C-h> :wincmd h<CR>
 nnoremap <C-j> :wincmd j<CR>
 nnoremap <C-k> :wincmd k<CR>
 nnoremap <C-l> :wincmd l<CR>
-" Replace all is aliased to S.
+" " Replace all is aliased to S.
 nnoremap S :%s//g<Left><Left>
-" Go back to previous file
+" " Go back to previous file
 nmap <leader>bb <C-^>
 nmap <leader>bn :bn<CR>
 
@@ -116,12 +123,12 @@ nmap <leader>bn :bn<CR>
 nnoremap <leader>gv :GFiles<CR>
 nnoremap <leader>pv :NERDTreeFind<bar> :vertical resize 45<CR>
 noremap <silent> <leader>e :NERDTreeToggle<CR>
-" nerdtree settings
+" " nerdtree settings
 let g:NERDTreeIgnore = ['^node_modules$'] " ignore node_modules to increase load speed
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1 " hide helper
 let g:NERDTreeStatusline = '' " set to empty to use lightline
-" Close window if NERDTree is the last one
+" " Close window if NERDTree is the last one
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " NERDTree Syntax Highlight
 " " Enables folder icon highlighting using exact match
@@ -177,3 +184,33 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
     \ }
+" Nerd Commenter
+" " Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" " Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" " Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" " Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+" " Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" FZF
+nnoremap <leader>gv :GFiles<CR>
+nnoremap <leader>gb :Buffers<CR>
+" " fzf in vim for Mac
+set rtp+=/usr/local/opt/fzf
+" " Open Regex
+nnoremap <leader>ps :Rg<Space>
+
+command! -bang -nargs=*  All
+  \ call fzf#run(fzf#wrap({'source': 'rg --files --hidden --no-ignore-vcs --glob "!{node_modules/*,.git/*}"', 'down': '40%', 'options': '--expect=ctrl-t,ctrl-x,ctrl-v --multi --reverse' }))
+autocmd VimEnter * command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --glob "!node_modules/*" --glob "!yarn.lock" --glob "!package-lock.json" --color "always" '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview('right:60%'),
+  \   <bang>0)
+" fzf rg
+nnoremap <leader>gs :Rg<space>
+nnoremap <leader>st :exec "Rg ".expand("<cword>")<cr>
