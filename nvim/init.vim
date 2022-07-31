@@ -197,8 +197,10 @@ let g:NERDToggleCheckAllLines = 1
 let g:NERDSpaceDelims = 1
 
 " FZF
-nnoremap <leader>gv :GFiles<CR>
-nnoremap <leader>gb :Buffers<CR>
+nnoremap <leader>fg :GFiles<CR>
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fl :BLines<CR>
 " " fzf in vim for Mac
 set rtp+=/usr/local/opt/fzf
 " " Open Regex
@@ -211,6 +213,27 @@ autocmd VimEnter * command! -bang -nargs=* Rg
   \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --glob "!node_modules/*" --glob "!yarn.lock" --glob "!package-lock.json" --color "always" '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview('right:60%'),
   \   <bang>0)
+" Ripgrep advanced
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+" Git grep
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
 " fzf rg
-nnoremap <leader>gs :Rg<space>
+let g:fzf_tags_command = 'ctags -R'
+" Border color
+
+let $FZF_DEFAULT_OPTS = '--info=inline'
+let $FZF_DEFAULT_COMMAND="rg --files --hidden"
+nnoremap <leader>fr :Rg<CR>
+nnoremap <leader>ft :Tags<CR>
 nnoremap <leader>st :exec "Rg ".expand("<cword>")<cr>
