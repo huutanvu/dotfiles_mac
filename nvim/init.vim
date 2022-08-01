@@ -30,6 +30,8 @@ call plug#begin("~/.config/nvim/plugged")
     Plug 'mattn/emmet-vim'
     " CoC
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    " ALE
+    Plug 'w0rp/ale'
 call plug#end()
 
 
@@ -62,9 +64,9 @@ filetype plugin on
 set noshowmode
 
 " " tab options
-set tabstop=2 softtabstop=2
+set tabstop=4 softtabstop=4
 " " Make the shift width when press > or < 4
-set shiftwidth=2
+set shiftwidth=4
 " " Use space instead of tab
 set expandtab
 " " Auto indent
@@ -260,14 +262,15 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " " coc.nvim auto complete on Enter
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " " COC extension
-let g:coc_user_config = {}
-let g:coc_global_extensions = [
-    \ 'coc-emmet',
-    \ 'coc-html',
-    \ ]
-      " \ 'coc-emmet',
-      " \ 'coc-html']
-      " \ 'coc-css',
+ let g:coc_user_config = {}
+ let g:coc_global_extensions = [
+       \ 'coc-emmet',
+       \ 'coc-html',
+       \ 'coc-css',
+       \ 'coc-prettier',
+       \ 'coc-tsserver',
+       \ 'coc-stylelint',
+       \ ]
       " \ 'coc-json',
       " \ 'coc-prettier',
       " \ 'coc-tsserver',
@@ -278,5 +281,29 @@ let g:coc_global_extensions = [
       " \ 'coc-vetur',
       " \ 'coc-stylelint',
       " \ 'coc-eslint'
-      
+autocmd FileType scss,less setl iskeyword+=@-@
 
+
+" " To go back to previous state use Ctrl+O
+nmap <silent><leader>gd <Plug>(coc-definition)
+nmap <silent><leader>gy <Plug>(coc-type-definition)
+nmap <silent><leader>gi <Plug>(coc-implementation)
+nmap <silent><leader>gr <Plug>(coc-references)
+
+" ALE
+" Fix files with prettier, and then ESLint.
+let b:ale_fixers = ['remove_trailing_lines', 'trim_whitespace', 'prettier', 'eslint']
+let g:ale_completion_enabled = 1
+let g:ale_fixers = {
+ \ 'javascript': ['eslint'],
+ \ 'less': ['stylelint', 'eslint'],
+ \ }
+let g:ale_sign_error = ''
+let g:ale_sign_warning = ''
+let g:ale_fix_on_save = 1
+let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
+let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
+
+" CoC-prettier
+command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+nnoremap <leader>af :Prettier<CR>
