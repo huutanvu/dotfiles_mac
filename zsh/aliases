@@ -12,6 +12,8 @@ alias ui="tmuxp load ui-components -y"
 alias acp="tmuxp load acp -y"
 alias storesuit="tmuxp load store-suite -y"
 alias suite="tmuxp load suite-nonsplit -y"
+alias spryker="tmuxp load spryker -y"
+alias demo="tmuxp load demo-shop -y"
 
 alias suit-up="cd $WORK/suite-nonsplit && docker/sdk up --build --assets --data"
 alias suit-build="cd $WORK/suite-nonsplit && docker/sdk up --build --assets"
@@ -25,3 +27,5 @@ alias acp-rebuild-fe="cd $WORK/suite-nonsplit && docker/sdk cli bash acp/bin/com
   && docker/sdk cli bash acp/bin/commands/atrs-command.sh npm run yves:custom:build"
 alias apps-rebuild="cd $WORK/suite-nonsplit && docker/sdk cli bash acp/bin/commands/apps-command.sh vendor/bin/console transf:g \
   && docker/sdk cli bash acp/bin/commands/apps-command.sh vendor/bin/console prop:ins"
+
+alias vimstaging="vim scp://wordpress_staging//var/www/spryker.com/htdocs/current/web/app/themes/spryker-website/"

@@ -270,6 +270,8 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR
        \ 'coc-prettier',
        \ 'coc-tsserver',
        \ 'coc-stylelint',
+       \ 'coc-angular',
+       \ 'coc-phpls',
        \ ]
       " \ 'coc-json',
       " \ 'coc-prettier',
