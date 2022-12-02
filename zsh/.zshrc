@@ -62,3 +62,7 @@ bindkey -s '^g' 'clear\n'
 
 # tmuxp
 export DISABLE_AUTO_TITLE='true'
+export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.1.0/bin:$PATH"
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+source /usr/local/opt/chruby/share/chruby/auto.sh
+chruby ruby-3.1.2

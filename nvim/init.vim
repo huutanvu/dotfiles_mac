@@ -1,4 +1,9 @@
 let mapleader=" "
+if exists('g:vscode')
+    " VSCode extension
+else
+    " ordinary neovim
+endif
 
 if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
 	echo "Downloading junegunn/vim-plug to manage plugins..."
@@ -8,6 +13,7 @@ if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin("~/.config/nvim/plugged")
+    Plug 'sainnhe/everforest'
     Plug 'EdenEast/nightfox.nvim'
     Plug 'mbbill/undotree'
     " git support
@@ -37,8 +43,14 @@ call plug#end()
 
 " Interface setup
 
-" " colorscheme gruvbox
-colorscheme nightfox
+" colorscheme gruvbox
+" colorscheme nightfox
+if has('termguicolors')
+    set termguicolors
+endif
+let g:everforest_background = 'hard'
+let g:everforest_better_performance = 1
+colorscheme everforest
 set background=dark
 
 " " copy to also to the system clipboard

@@ -14,6 +14,7 @@ alias storesuit="tmuxp load store-suite -y"
 alias suite="tmuxp load suite-nonsplit -y"
 alias spryker="tmuxp load spryker -y"
 alias demo="tmuxp load demo-shop -y"
+alias learn="tmuxp load learn -y"
 
 alias suit-up="cd $WORK/suite-nonsplit && docker/sdk up --build --assets --data"
 alias suit-build="cd $WORK/suite-nonsplit && docker/sdk up --build --assets"
@@ -25,6 +26,9 @@ alias acp-rebuild-fe="cd $WORK/suite-nonsplit && docker/sdk cli bash acp/bin/com
   && docker/sdk cli bash acp/bin/commands/atrs-command.sh vendor/bin/console app-catalog:script:build \
   && docker/sdk cli bash acp/bin/commands/atrs-command.sh vendor/bin/console app-catalog:generate-loader:script \
   && docker/sdk cli bash acp/bin/commands/atrs-command.sh npm run yves:custom:build"
+alias rebuild-loader="cd $WORK/suite-nonsplit && rm -rf $WORK/suite-nonsplit/registry-service/src/Generated/Zed && docker/sdk atrs-console app-catalog:generate-loader:script && docker/sdk atrs-cli npm run yves:custom:build"
+alias vim-loader-template="vim $WORK/suite-nonsplit/registry-service/src/Registry/Zed/AppCatalog/Presentation/Index/loader.js.twig"
+alias cd-built-scripts="cd $WORK/suite-nonsplit/registry-service/public/Yves/assets/app-store-catalog"
 alias apps-rebuild="cd $WORK/suite-nonsplit && docker/sdk cli bash acp/bin/commands/apps-command.sh vendor/bin/console transf:g \
   && docker/sdk cli bash acp/bin/commands/apps-command.sh vendor/bin/console prop:ins"
 
